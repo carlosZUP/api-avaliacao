@@ -5,6 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+
+import br.com.zup.exceptions.ReceitaException;
 import br.com.zup.models.Receita;
 import br.com.zup.repositories.ReceitaRepository;
 
@@ -33,7 +35,7 @@ public class ReceitaService {
 	public void atualizarReceita(int id, Receita receita) {
 		Optional<Receita> optionalReceita = receitaRepository.findById(id);
 		if (!optionalReceita.isPresent()) {
-			
+			throw new ReceitaException("Não há mensagens com o id...");
 		}
 
 		receitaRepository.findById(id);
@@ -46,7 +48,7 @@ public class ReceitaService {
 		try {
 			receitaRepository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
-			
+			throw new ReceitaException("Não há mensagnes com o id...");
 		}
 	}
 
